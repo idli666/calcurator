@@ -91,7 +91,12 @@ table button,
     border-radius: 6%;
 }
 @media screen and (max-width: 480px){
+    table button,
+#otherBtn button {
     width: 60px;
+    padding-left: 16px;
+    padding-right: 16px;
+    }
 }
 
 table button {
