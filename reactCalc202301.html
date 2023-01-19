@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this.state in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <link rel="stylesheet" href="./style.css" type="text/css">
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    /*     const Buttons = (id, clsName, btnVal) => {
+          return (
+            <td><button id={id} className={clsName} onClick={(e) => setNum(e)}>{btnVal}</button></td>
+          )
+        } */
+    class CalcTable extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state={
+          currentNum : 0,
+          numMemory:null,
+          calcMemory:null,
+          irekae : true,
+        }
+      }
+
+      setNum = (e) => {
+        let elCls = e.target.className;
+        let elText = e.target.textContent;
+        let elId = e.target.id;
+        console.log(e.target.textContent);
+        if (elCls === "numBtn") {
+          if (this.state.irekae) {
+            this.setState({irekae:String(this.state.currentNum) === "0" ? true : false})
+            //this.state.irekae = (String(this.state.currentNum) === "0" ? true : false)
+            if (elText === ".") {
+              this.setState({irekae:false})
+              this.setState({currentNum:"0."})
+            } else {
+              this.setState({irekae:false})
+              this.setState({currentNum:elText})
+             // this.state.currentNum = (elText)
+            }
+
+          } else {
+            if (elText === "." && String(this.state.currentNum).includes(".")) {
+            } else {
+              this.setState({currentNum:this.state.currentNum + elText})
+            }
+          }
+        } else if (elCls === "calcBtn") {
+          //メモリがあったら計算する
+          if (this.state.numMemory && this.state.calcMemory) {
+            let resl=this.operator(this.state.calcMemory, this.state.numMemory, this.state.currentNum)
+            this.setState({currentNum:resl})
+            this.setState({numMemory:resl})
+            //setNumMemory(currentNum);
+            console.log(this.state.currentNum)
+            console.log(this.state.numMemory)
+          }
+          this.state.calcMemory = (elId);
+          this.state.irekae = (true);
+          if (!Boolean(this.state.numMemory)) {
+            console.log("!numM " + Boolean(this.state.numMemory))
+            this.state.numMemory = (this.state.currentNum);
+          }
+          //irekae = true
+        }
+        return;
+      }
+      getResult = () => {
+        console.log(this.state)
+        this.setState({currentNum:this.operator(this.state.calcMemory, this.state.numMemory, this.state.currentNum)});
+        this.setState({calcMemory:null});
+        this.setState({numMemory:null});
+      }
+
+
+      equalBtn = (fn) => {
+        return (
+          <td>
+            <button id="equalBtn" className="equalBtn" onClick={fn} >=</button>
+          </td>
+        )
+      }
+      acEve = () => {
+        this.setState({currentNum:0});
+        this.setState({numMemory:null});
+        this.setState({calcMemory:null});
+        this.setState({irekae:true});
+      }
+      cEve = () => {
+        this.setState({currentNum:0});
+        this.setState({irekae:true});
+      }
+      plsMinsEve = () => { //argにprop? this.state.state?
+        let num = String(this.state.currentNum);
+        if (!num.includes("-")) {
+          //マイナス含まないなら追加
+          this.setState({currentNum:num.padStart(num.length + 1, "-")});
+        } else {
+          this.setState({currentNum: num.slice(1)});
+        }
+      }
+      operator = (calcMemory, numMemory, currentNum) => { // return
+        let result;
+        //文字列の演算子から式作れないから処理分ける
+        switch (calcMemory) {
+          case "divid": // Number(inputEl.value)===0のときエラーと記述してもよさそう
+            result = Number(numMemory) / Number(currentNum);
+            //infinitならエラー
+            if (!isFinite(result)) {
+              return "error";
+            } else {
+              return result;
+              //numMemory.set("beforeNum", inputEl.value);
+            }
+            break;
+          case "multiply":
+            result = Number(numMemory) * Number(currentNum);
+            if (!isFinite(result)) {
+              return "error";
+            } else {
+              return result;
+            }
+            break;
+          case "minus":
+            result = Number(numMemory) - Number(currentNum);
+            if (!isFinite(result)) {
+              return "error";
+            } else {
+              return result;
+            }
+            break;
+          case "plus":
+            result = Number(numMemory) + Number(currentNum);
+            if (!isFinite(result)) {
+              return "error";
+            } else {
+              return result;
+            }
+            break;
+          default:
+        }
+      }
+
+      render() {
+        return (
+          <table>
+            <tr>
+              <th colspan="4">電卓</th>
+
+            </tr>
+            <tr>
+              <td colspan="4">
+                <input id="hyouji" name="" value={this.state.currentNum} readonly></input>
+              </td>
+            </tr>
+            <tr>
+              <td><button id="acBtn" class="optionBtn" onClick={this.acEve}>AC</button></td>
+              <td><button id="cBtn" class="optionBtn" onClick={this.cEve}>C</button></td>
+              <td><button id="plsMinsBtn" class="optionBtn" onClick={this.plsMinsEve}>+/-</button></td>
+              <td><button id="divid" class="calcBtn" onClick={(e) => this.setNum(e)}>÷</button></td>
+            </tr>
+
+            <tr>
+              <td><button id="seven" class="numBtn" onClick={(e) => this.setNum(e)}>7</button></td>
+              <td><button id="eigtt" class="numBtn" onClick={(e) => this.setNum(e)}>8</button></td>
+              <td><button id="nine" class="numBtn" onClick={(e) => this.setNum(e)}>9</button></td>
+              <td><button id="multiply" class="calcBtn" onClick={(e) => this.setNum(e)}>×</button></td>
+            </tr>
+            <tr>
+              <td><button id="four" class="numBtn" onClick={(e) => this.setNum(e)}>4</button></td>
+              <td><button id="five" class="numBtn" onClick={(e) => this.setNum(e)}>5</button></td>
+              <td><button id="six" class="numBtn" onClick={(e) => this.setNum(e)}>6</button></td>
+              <td><button id="minus" class="calcBtn" onClick={(e) => this.setNum(e)}>－</button></td>
+            </tr>
+            <tr>
+              <td><button id="one" class="numBtn" onClick={(e) => this.setNum(e)}>1</button></td>
+              <td><button id="two" class="numBtn" onClick={(e) => this.setNum(e)}>2</button></td>
+              <td><button id="three" class="numBtn" onClick={(e) => this.setNum(e)}>3</button></td>
+              <td><button id="plus" class="calcBtn" onClick={(e) => this.setNum(e)}>+</button></td>
+            </tr>
+            <tr>
+              <td colspan="2"><button id="zero" class="numBtn" onClick={(e) => this.setNum(e)}>0</button></td>
+              <td><button id="dot" class="numBtn" onClick={(e) => this.setNum(e)}>.</button></td>
+              <td><button id="equalBtn" class="calcBtn" onClick={this.getResult}>=</button></td>
+            </tr>
+          </table>)
+      }
+    }
+
+
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<CalcTable />);
+
+  </script>
+  <!--
+      Note: this.state page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this.state section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+</body>
+
+</html>
