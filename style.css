@@ -1,0 +1,383 @@
+@charset"utf-8";
+
+body {
+    height: 1000px;
+}
+
+/* 表全体 */
+table {
+    /* display: block; ブロックにすると横一杯になった*/
+    /* display: inline-block; インラインブロックにすると左に縮む*/
+    align-items: center;
+    text-align: center;
+    /* width: 250px; */
+    max-height: 500px;
+    min-width: 340px;
+    /* float: left; */
+    /* margin: auto; 親要素にflex付与したので不要*/
+    border-collapse: collapse;
+    /* 線を1重にする */
+    table-layout: fixed;
+    /* background-color: rgb(10, 52, 89); */
+}
+
+/* 表ヘッダー */
+th {
+    text-align: center;
+    padding: 4px;
+    height: 24px;
+    background-color: rgb(173, 204, 232);
+}
+
+/* 結果表示 */
+table td input {
+    color: rgb(61, 66, 62);
+    font-size: 2.4rem;
+    text-align: right;
+    /* position: relative; */
+    padding: 6px 15px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+    /* ビューポート縦幅が高いと隙間が空くのを直す */
+    background-color: rgb(238, 238, 240);
+    border: none;
+    outline: none;
+    cursor: default;
+}
+
+
+/* pxで指定してもこの列の高さが画面によって変わる */
+/* table td:nth-of-type(2){
+    height: 40px !important;
+    max-height: 40px;
+}
+ */
+
+
+
+table td {
+    /* ここを指定しないとfixedが効かない */
+    /* width: calc(100vw / 20); */
+    width: 1px;
+    /* height: calc(100vh / 9); */
+    height: 1px;
+
+    text-align: center;
+}
+
+/* 高さは中身に沿う */
+table tr {
+    height: fit-content;
+}
+
+/* 3人目以降にスタイル付与 */
+table tr:nth-child(n+3) {
+    height: calc(100vh / 9);
+}
+
+
+table button,
+#otherBtn button {
+    font-size: 1.6em;
+    display: block;
+    font-weight: bold;
+    min-width: 54px;
+    min-height: 54px;
+    padding: 6px;
+    /* margin: auto; */
+    border: none;
+    border-radius: 6%;
+}
+
+table button {
+    height: 100%;
+    width: 100%;
+}
+
+button#zero {
+    border-radius: 2% / 6%;
+
+}
+
+/* AC C +/- */
+.optionBtn {
+    padding: 8px;
+    color: rgb(209, 141, 72);
+    background-color: rgb(251, 245, 230);
+}
+
+.optionBtn:hover {
+    background-color: rgb(239, 195, 126);
+    transition: 0.08s ease;
+}
+
+.optionBtn:active {
+    background-color: rgba(239, 195, 126, .5);
+    transition: 0.08s ease;
+}
+
+/* 演算子ボタン */
+.calcBtn {
+    color: white;
+    background-color: rgb(167, 201, 199);
+}
+
+.calcBtn:hover {
+    background-color: rgb(213, 230, 105);
+    transition: 0.08s ease;
+}
+
+.calcBtn:active {
+    background-color: rgba(213, 230, 105, .5);
+    transition: 0.08s ease;
+
+}
+
+/* 数字ボタン */
+.numBtn {
+    color: white;
+    background-color: rgb(61, 66, 62);
+}
+
+.numBtn:hover {
+    background-color: rgb(77, 157, 191);
+    transition: 0.08s ease;
+}
+
+.numBtn:active {
+    background-color: rgba(77, 157, 191, .5);
+    transition: 0.1s ease;
+
+}
+
+/* 記憶中の演算子ボタン */
+.push {
+    background-color: rgb(213, 230, 105);
+}
+
+/* etc */
+/* 電卓全部ラップ */
+#calcWrap {
+    margin: auto;
+    display: flex;
+    width: fit-content;
+    /* 子要素の縦幅が均等になる */
+    /* flex-wrap: wrap; */
+    /* margin: auto;効かない */
+    justify-content: left;
+}
+
+/* その他の機能 */
+#etc {
+    /* display: inline-block; */
+    display: table;
+    /* align-items: center; */
+    /* height: fit-content; */
+    /* flexで親と均等になってた縦幅がコンテンツに沿うようになった */
+    /* background-color: orange; */
+    /* width: 280px; */
+    width: 0px;
+    max-width: 300px;
+    height: 500px;
+    /* z-index: 10; */
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+/* 追加の計算ボタン */
+/* #etc #otherBtn {
+    display: inline;
+    margin-top: 50px;
+    text-align: center;
+    background-color: blue;
+} */
+
+
+#otherBtn button {
+    /* margin: auto; */
+    display: inline-block;
+    /* 横並びに */
+    /* display:table-cell; */
+    margin: 6px;
+    margin-right: 0px;
+    color: rgb(209, 141, 72);
+    /* width: 40px;
+    height: 40px; */
+    /* margin-top: calc(54px - 1.6em); */
+    border-radius: 50%;
+    background-color: rgb(238, 213, 165);
+    z-index: 10;
+    /* overflow: hidden; */
+}
+
+#otherBtn button:hover {
+    background-color: rgb(244, 238, 174);
+    transition: 0.08s ease;
+}
+
+#otherBtn button:active {
+    background-color: rgb(255, 243, 109);
+    transition: 0.08s ease;
+}
+
+#otherBtn #tax18 {
+    font-size: 1rem;
+    line-height: 1rem;
+    vertical-align: bottom;
+}
+
+/* #text{
+    display: inline;
+} */
+#text>ul {
+    font-size: .7em;
+    width: 280px;
+    height: fit-content;
+    transition: 0.5s ease-in-out;
+    box-sizing: border-box;
+    padding-left: 1rem;
+}
+
+/* 効かなかった */
+/* #text ul li{
+    list-style-position: inside;
+} */
+
+/* サウンドボタン */
+/* 参考にしたもの https://kodocode.net/design-css-checkbox/ */
+.volwrap {
+    /*  display: block; */
+    /* margin-left: 10px */
+    /* background-color: aqua ;*/
+    transition: 0.5s ease-in-out;
+}
+
+.volwrap>* {
+    display: block;
+    /* margin-left: 10px; */
+}
+
+.volwrap span {
+    font-size: .8em;
+}
+
+/* チェックボックスを非表示 */
+#etc #volBtn {
+    display: none;
+}
+
+/* 疑似要素を使ったスイッチの丸ボタン */
+label::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    top: -1.6px;
+    left: -2px;
+    float: left;
+    box-sizing: border-box;
+    border: 1.6px solid lightgray;
+    background-color: white;
+    transition: 0.16s ease-in-out;
+}
+
+/* スイッチオンの時の丸ボタン */
+#etc input:checked+label::before {
+    left: 18px;
+    border: 1.6px solid rgb(141, 219, 58);
+}
+
+/* スイッチの背景 */
+label {
+    content: "";
+    box-sizing: border-box;
+    display: block;
+    width: 38px;
+    height: 20px;
+    border-radius: 20px;
+    border: 1.6px solid lightgray;
+    position: relative;
+    transition: 0.16s ease-in-out;
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+/* スイッチオンの時の背景 */
+#etc input:checked+label {
+    border: 1.6px solid rgb(141, 219, 58);
+    background-color: rgb(141, 219, 58);
+    transition: 0.16s ease-in-out;
+}
+
+/* etcの開閉 */
+#openBtn {
+    font-size: 1em;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    /* border: 1.6px solid gray;
+    border-left: none; */
+    width: 38px;
+    height: 500px;
+    transition: 0.5s ease-in-out;
+    box-sizing: border-box;
+}
+
+#etc>* {
+    display: inline-block;
+    /* position: relative; */
+    /* overflow: hidden; */
+    /*     padding: 0px; */
+    margin: 0px;
+    width: 0px;
+    height: 0px;
+    max-height: fit-content;
+    transition: 0.3s linear;
+    /* background-color: aqua; */
+}
+
+
+/* 開いてる時.openつく */
+.open#etc {
+    /* width: 300px; */
+    max-height: 500px;
+    height: 500px;
+    /* display: inline-block; */
+}
+
+.open#etc>* {
+    /* overflow: visible; */
+    /* padding: 30px; */
+    margin: 10px;
+    width: 300px;
+    height: fit-content;
+    transition: 0.3s linear;
+}
+.open#etc #otherBtn{
+    max-width: calc(100vw - 400px);
+}
+
+#openBtn::after {
+    position: relative;
+    display: block;
+    left: 0px;
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-top: 2px solid gray;
+    border-right: 2px solid gray;
+    transform: rotate(45deg);
+    transition: 0.5s ease-in-out;
+}
+
+#openBtn.open::after {
+    left: 8px;
+    transform: rotate(225deg);
+    transition: 0.5s ease-in-out;
+}
+
