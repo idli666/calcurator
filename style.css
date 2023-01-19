@@ -84,6 +84,7 @@ table button,
     display: block;
     font-weight: bold;
     min-width: 54px;
+    width: 54px;
     min-height: 54px;
     padding: 6px;
     /* margin: auto; */
